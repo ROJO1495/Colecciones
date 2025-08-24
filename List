@@ -1,0 +1,100 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+class Alumno {
+    String carnet;
+    String nombre;
+
+    public Alumno(String carnet, String nombre) {
+        this.carnet = carnet;
+        this.nombre = nombre;
+    }
+
+    public String toString() {
+        return "Carnet: " + carnet + " | Nombre: " + nombre;
+    }
+}
+
+public class lista {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        List<Alumno> alumnos = new ArrayList<>();
+
+        int opcion = 0;
+        do {
+            System.out.println("\n MENÚ PRINCIPAL");
+            System.out.println("1. Registrar Alumno");
+            System.out.println("2. Buscar Alumno por carnet");
+            System.out.println("3. Eliminar Alumno");
+            System.out.println("4. Mostrar Todos los Alumnos");
+            System.out.println("5. Salir");
+            System.out.print("Seleccione una opción: ");
+            opcion = sc.nextInt();
+            sc.nextLine(); 
+
+            switch (opcion) {
+                case 1: 
+                    System.out.print("Carnet: ");
+                    String carnet = sc.nextLine();
+                    System.out.print("Nombre completo: ");
+                    String nombre = sc.nextLine();
+                    alumnos.add(new Alumno(carnet, nombre));
+                    System.out.println("Alumno registrado exitosamente.");
+                    break;
+
+                case 2:
+                    System.out.print("Ingrese carnet a buscar: ");
+                    String carnetBuscar = sc.nextLine();
+                    boolean encontrado = false;
+                    for (Alumno a : alumnos) {
+                        if (a.carnet.equalsIgnoreCase(carnetBuscar)) {
+                            System.out.println("Alumno encontrado: " + a);
+                            encontrado = true;
+                            break;
+                        }
+                    }
+                    if (!encontrado) {
+                        System.out.println("Alumno no encontrado, no se puede Mostrar.");
+                    }
+                    break;
+
+                case 3:     
+                    System.out.print("Ingrese carnet a eliminar: ");
+                    String carnetEliminar = sc.nextLine();
+                    Alumno alumnoEliminar = null;
+                    for (Alumno a : alumnos) {
+                        if (a.carnet.equalsIgnoreCase(carnetEliminar)) {
+                            alumnoEliminar = a;
+                            break;
+                        }
+                    }
+                    if (alumnoEliminar != null) {
+                        alumnos.remove(alumnoEliminar);
+                        System.out.println("Alumno eliminado exitosamente.");
+                    } else {
+                        System.out.println("Alumno no encontrado, No se puede Eliminar.");
+                    }
+                    break;
+
+                case 4:
+                    if (alumnos.isEmpty()) {
+                        System.out.println("No hay alumnos registrados.");
+                    } else {
+                        System.out.println("\n--- Lista de Alumnos ---");
+                        for (Alumno a : alumnos) {
+                            System.out.println(a);
+                        }
+                    }
+                    break;
+
+                case 5: 
+                    System.out.println("Saliendo...");
+                    break;
+
+                default:
+                    System.out.println("Opción no válida.");
+            }
+        } while (opcion != 5);
+    }
+}
