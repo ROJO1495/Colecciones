@@ -1,0 +1,36 @@
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.TreeMap;
+import java.util.Map;
+
+public class MAPCOLLECTION {
+    public static void main(String[] args) {        
+       
+        Map<String, Integer> hashMap = new HashMap<>();
+        hashMap.put("Jimmy", 30);
+        hashMap.put("Diego", 25);
+        hashMap.put("Nelson", 40);
+        System.out.println("Edad de Jimmy: " + hashMap.get("Jimmy"));
+        System.out.println("¿Existe Diego?: " + hashMap.containsKey("Diego"));
+        hashMap.remove("Nelson");
+        hashMap.forEach((k,v) -> System.out.println(k + " → " + v));
+
+        Map<String, Integer> linkedMap = new LinkedHashMap<>();
+        linkedMap.put("Jimmy", 30);
+        linkedMap.put("Diego", 25);
+        linkedMap.put("Nelson", 40);
+        System.out.println("Edad de Diego: " + linkedMap.get("Diego"));
+        System.out.println("¿Existe Nelson?: " + linkedMap.containsKey("Nelson"));
+        linkedMap.remove("Jimmy");
+        linkedMap.forEach((k,v) -> System.out.println(k + " → " + v));
+      
+        Map<String, Integer> treeMap = new TreeMap<>();
+        treeMap.put("Jimmy", 30);
+        treeMap.put("Diego", 25);
+        treeMap.put("Nelson", 40);
+        System.out.println("Edad de Nelson: " + treeMap.get("Nelson"));
+        System.out.println("¿Existe Jimmy?: " + treeMap.containsKey("Jimmy"));
+        treeMap.remove("Diego");
+        treeMap.forEach((k,v) -> System.out.println(k + " → " + v));
+    }
+}
