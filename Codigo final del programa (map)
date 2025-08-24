@@ -1,0 +1,110 @@
+import java.util.LinkedHashMap;  
+import java.util.Map;  
+import java.util.Scanner;  
+  
+class Alumno {  
+    String carnet;  
+    String nombre;  
+  
+    public Alumno(String carnet, String nombre) {  
+        this.carnet = carnet;  
+        this.nombre = nombre;  
+    }  
+  
+    @Override  
+    public String toString() {  
+        return "Carnet: " + carnet + " | Nombre: " + nombre;  
+    }  
+}  
+  
+public class Desafio_1 {  
+    public static void main(String[] args) {  
+          
+        try (Scanner sc = new Scanner(System.in)) {  
+            Map<String, Alumno> alumnos = new LinkedHashMap<>();  
+              
+            int opcion;  
+            do {  
+                System.out.println("\n📚 MENU PRINCIPAL");  
+                System.out.println("1. Ingresar alumno");  
+                System.out.println("2. Buscar alumno por carnet");  
+                System.out.println("3. Eliminar alumno por carnet");  
+                System.out.println("4. Mostrar todos los alumnos");  
+                System.out.println("5. Salir");  
+                System.out.print("Seleccione una opción: ");  
+                  
+                while (!sc.hasNextInt()) {  
+                    sc.nextLine();  
+                    System.out.print("Ingrese un número válido: ");  
+                }  
+                opcion = sc.nextInt(); sc.nextLine();  
+                  
+                switch (opcion) {  
+                    case 1 ->  {  
+                        String carnet = pedirInput(sc, "Carnet: ");  
+                        String nombre = pedirInput(sc, "Nombre completo: ");  
+                          
+                        String clave = carnet.toLowerCase();  
+                        if (alumnos.containsKey(clave)) {  
+                            System.out.println("⚠️ Ya existe un alumno con ese carnet.");  
+                        } else {  
+                            alumnos.put(clave, new Alumno(carnet, nombre));  
+                            System.out.println("✅ Alumno ingresado exitosamente.");  
+                        }  
+                        esperar(sc);  
+                    }  
+                    case 2 ->  {  
+                        String carnet = pedirInput(sc, "Ingrese el carnet a buscar: ").toLowerCase();  
+                        Alumno a = alumnos.get(carnet);  
+                        if (a != null) {  
+                            System.out.println("🎓 Alumno encontrado: " + a.toString());  
+                        } else {  
+                            System.out.println("❌ Alumno no encontrado.");  
+                        }  
+                        esperar(sc);  
+                    }  
+                    case 3 ->  {  
+                        String carnet = pedirInput(sc, "Ingrese el carnet del alumno a eliminar: ").toLowerCase();  
+                        Alumno eliminado = alumnos.remove(carnet);  
+                        if (eliminado != null) {  
+                            System.out.println("🗑️ Alumno eliminado exitosamente.");  
+                        } else {  
+                            System.out.println("❌ Alumno no encontrado.");  
+                        }  
+                        esperar(sc);  
+                    }  
+                    case 4 ->  {  
+                        if (alumnos.isEmpty()) {  
+                            System.out.println("⚠️ No hay alumnos registrados.");  
+                        } else {  
+                            System.out.println("\n--- Lista de Alumnos ---");  
+                            for (Alumno a : alumnos.values()) {  
+                                System.out.println(a);  
+                            }  
+                        }  
+                        esperar(sc);  
+                    }  
+                    case 5 -> System.out.println("👋 Programa finalizado.");  
+                    default -> System.out.println("⚠️ Opción inválida. Intente de nuevo.");  
+                }  
+            } while (opcion != 5);  
+        }  
+    }  
+
+    private static String pedirInput(Scanner sc, String mensaje) {  
+        String entrada;  
+        do {  
+            System.out.print(mensaje);  
+            entrada = sc.nextLine().trim();  
+            if (entrada.isBlank()) {  
+                System.out.println("⚠️ Entrada inválida (solo espacios o vacía). Intente de nuevo.");  
+            }  
+        } while (entrada.isBlank());  
+        return entrada;  
+    }  
+
+    private static void esperar(Scanner sc) {  
+        System.out.println("\nPresione ENTER para continuar...");  
+        sc.nextLine();  
+    }  
+}
